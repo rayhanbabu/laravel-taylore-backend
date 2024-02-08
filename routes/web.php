@@ -9,6 +9,13 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\WeekController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\SleeveController;
+use App\Http\Controllers\CollorController;
+use App\Http\Controllers\PocketController;
+use App\Http\Controllers\BackdetailController;
+use App\Http\Controllers\ButtomController;
+use App\Http\Controllers\ButtomcutController;
+use App\Http\Controllers\SliderController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -117,7 +124,67 @@ use App\Http\Controllers\SleeveController;
           Route::post('/admin/sleeve_update',[SleeveController::class,'sleeve_update']);
           Route::delete('/admin/sleeve_delete',[SleeveController::class,'sleeve_delete']);
 
+
+            //collors  create
+            Route::get('/admin/collor_view',[CollorController::class,'collor_view']);
+            Route::get('/admin/collor_fetch',[CollorController::class,'fetch']);
+            Route::get('/admin/collor/fetch_data',[CollorController::class,'fetch_data']);
+            Route::post('/admin/collor_store',[CollorController::class,'store']);
+            Route::get('/admin/collor_edit',[CollorController::class,'collor_edit']);
+            Route::post('/admin/collor_update',[CollorController::class,'collor_update']);
+            Route::delete('/admin/collor_delete',[CollorController::class,'collor_delete']);
+
+             
+
+            //Pocket  create
+              Route::get('/admin/pocket_view',[PocketController::class,'pocket_view']);
+              Route::get('/admin/pocket_fetch',[PocketController::class,'fetch']);
+              Route::get('/admin/pocket/fetch_data',[PocketController::class,'fetch_data']);
+              Route::post('/admin/pocket_store',[PocketController::class,'store']);
+              Route::get('/admin/pocket_edit',[PocketController::class,'pocket_edit']);
+              Route::post('/admin/pocket_update',[PocketController::class,'pocket_update']);
+              Route::delete('/admin/pocket_delete',[PocketController::class,'pocket_delete']);
+
+              
+            //backdetail  create
+            Route::get('/admin/backdetail_view',[BackdetailController::class,'backdetail_view']);
+            Route::get('/admin/backdetail_fetch',[BackdetailController::class,'fetch']);
+            Route::get('/admin/backdetail/fetch_data',[BackdetailController::class,'fetch_data']);
+            Route::post('/admin/backdetail_store',[BackdetailController::class,'store']);
+            Route::get('/admin/backdetail_edit',[BackdetailController::class,'backdetail_edit']);
+            Route::post('/admin/backdetail_update',[BackdetailController::class,'backdetail_update']);
+            Route::delete('/admin/backdetail_delete',[BackdetailController::class,'backdetail_delete']);
+       
+          
+              //buttom  create
+              Route::get('/admin/buttom_view',[ButtomController::class,'buttom_view']);
+              Route::get('/admin/buttom_fetch',[ButtomController::class,'fetch']);
+              Route::get('/admin/buttom/fetch_data',[ButtomController::class,'fetch_data']);
+              Route::post('/admin/buttom_store',[ButtomController::class,'store']);
+              Route::get('/admin/buttom_edit',[ButtomController::class,'buttom_edit']);
+              Route::post('/admin/buttom_update',[ButtomController::class,'buttom_update']);
+              Route::delete('/admin/buttom_delete',[ButtomController::class,'buttom_delete']);
+
+
+           //buttomcut  create
+            Route::get('/admin/buttomcut_view',[ButtomcutController::class,'buttomcut_view']);
+            Route::get('/admin/buttomcut_fetch',[ButtomcutController::class,'fetch']);
+            Route::get('/admin/buttomcut/fetch_data',[ButtomcutController::class,'fetch_data']);
+            Route::post('/admin/buttomcut_store',[ButtomcutController::class,'store']);
+            Route::get('/admin/buttomcut_edit',[ButtomcutController::class,'buttomcut_edit']);
+            Route::post('/admin/buttomcut_update',[ButtomcutController::class,'buttomcut_update']);
+            Route::delete('/admin/buttomcut_delete',[ButtomcutController::class,'buttomcut_delete']);        
          
+        //slider  create
+        Route::get('/admin/slider_view',[SliderController::class,'slider_view']);
+        Route::get('/admin/slider_fetch',[SliderController::class,'fetch']);
+        Route::get('/admin/slider/fetch_data',[SliderController::class,'fetch_data']);
+        Route::post('/admin/slider_store',[SliderController::class,'store']);
+        Route::get('/admin/slider_edit',[SliderController::class,'slider_edit']);
+        Route::post('/admin/slider_update',[SliderController::class,'slider_update']);
+        Route::delete('/admin/slider_delete',[SliderController::class,'slider_delete']);
+
+
          Route::middleware('AdminToken')->group(function(){
 
               //Teacher  create

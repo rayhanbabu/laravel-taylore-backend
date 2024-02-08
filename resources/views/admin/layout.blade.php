@@ -94,6 +94,12 @@
   <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
           <nav class="sb-sidenav-menu-nested nav">
               <a class="nav-link @yield('sleeve')" href="{{url('/admin/sleeve_view')}}"> Sleeve </a>
+              <a class="nav-link @yield('collor')" href="{{url('/admin/collor_view')}}"> Collor </a>
+              <a class="nav-link @yield('pocket')" href="{{url('/admin/pocket_view')}}"> Pocket </a>
+              <a class="nav-link @yield('back')" href="{{url('/admin/backdetail_view')}}"> Back Details </a>
+              <a class="nav-link @yield('buttom')" href="{{url('/admin/buttom_view')}}"> Buttom </a>
+              <a class="nav-link @yield('buttomcut')" href="{{url('/admin/buttomcut_view')}}"> Buttom  cut </a>
+              <a class="nav-link @yield('slider')" href="{{url('/admin/slider_view')}}"> Slider Menu </a>
 
           </nav>
   </div>

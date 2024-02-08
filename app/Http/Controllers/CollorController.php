@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 use Exception;
-use App\Models\Sleeve;
+use App\Models\Collor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
-class SleeveController extends Controller
+class CollorController extends Controller
 {
    
-    public function sleeve_view(Request $request){
-        try{ 
-             
-              return view('admin.sleeve');
+    public function collor_view(Request $request){
+         try{  
+               return view('admin.collor');
            }catch (Exception $e) { return  view('errors.error',['error'=>$e]);}
       }
  
@@ -21,8 +20,8 @@ class SleeveController extends Controller
        $dept_id = $request->header('dept_id');
        $teacher_id = $request->header('id');
        $validator=\Validator::make($request->all(),[    
-          'sleeve_name'=>'required',
-          'sleeve_name'=>'required|unique:sleeves,sleeve_name',
+          'collor_name'=>'required',
+          'collor_name'=>'required|unique:collors,collor_name',
           'image'=>'image|mimes:jpeg,png,jpg|max:400',
         ],
         );
@@ -34,10 +33,10 @@ class SleeveController extends Controller
             ]);
       }else{
  
-             $model= new Sleeve;
+             $model= new Collor;
              $model->dept_id=$dept_id;
-             $model->sleeve_name=$request->input('sleeve_name');
-             $model->sleeve_des=$request->input('sleeve_des');
+             $model->collor_name=$request->input('collor_name');
+             $model->collor_des=$request->input('collor_des');
              $model->created_by=$teacher_id;
              if ($request->hasfile('image')) {
                $imgfile = 'booking-';
@@ -68,9 +67,9 @@ class SleeveController extends Controller
          }
      }
  
-    public function sleeve_edit(Request $request) {
+    public function collor_edit(Request $request) {
       $id = $request->id;
-      $data = Sleeve::find($id);
+      $data = Collor::find($id);
       return response()->json([
           'status'=>200,  
           'data'=>$data,
@@ -78,26 +77,26 @@ class SleeveController extends Controller
     }
  
  
-    public function sleeve_update(Request $request ){
+    public function collor_update(Request $request ){
 
-       $validator=\Validator::make($request->all(),[    
-          'sleeve_name'=>'required',
-          'sleeve_name'=>'required|unique:sleeves,sleeve_name,'.$request->input('edit_id'),
+        $validator=\Validator::make($request->all(),[    
+          'collor_name'=>'required',
+          'collor_name'=>'required|unique:collors,collor_name,'.$request->input('edit_id'),
           'image'=>'image|mimes:jpeg,png,jpg|max:400',
-      ]);
+       ]);
  
-     $teacher_id = $request->header('id');
-   if($validator->fails()){
+      $teacher_id = $request->header('id');
+    if($validator->fails()){
           return response()->json([
             'status'=>700,
             'message'=>$validator->messages(),
          ]);
-   }else{
-         $model=Sleeve::find($request->input('edit_id'));
-     if($model){
-         $model->sleeve_name=$request->input('sleeve_name');
-         $model->sleeve_des=$request->input('sleeve_des');
-         $model->sleeve_status=$request->input('sleeve_status');
+    }else{
+          $model=Collor::find($request->input('edit_id'));
+      if($model){
+         $model->collor_name=$request->input('collor_name');
+         $model->collor_des=$request->input('collor_des');
+         $model->collor_status=$request->input('collor_status');
          $model->updated_by=$teacher_id;
 
          if ($request->hasfile('image')) {
@@ -140,7 +139,7 @@ class SleeveController extends Controller
    }
  
  
-   public function sleeve_delete(Request $request) { 
+   public function collor_delete(Request $request) { 
  
        // $hallinfo=Building::where('id',$request->input('id'))->count('id');
        //  if($hallinfo>0){
@@ -149,7 +148,7 @@ class SleeveController extends Controller
        //       'message'=>'Can not delete this record. This hall is used in hall info table.',
        //      ]);
        //   }else{
-           $model=Sleeve::find($request->input('id'));
+           $model=Collor::find($request->input('id'));
            $filePath = public_path('uploads') . '/' . $model->image;
            if(File::exists($filePath)){
                  File::delete($filePath);
@@ -167,8 +166,8 @@ class SleeveController extends Controller
  
    public function fetch(Request $request){
        $dept_id = $request->header('dept_id');
-       $data=Sleeve::where('dept_id',$dept_id)->orderBy('id','desc')->paginate(10);
-       return view('admin.sleeve_data',compact('data'));
+       $data=Collor::where('dept_id',$dept_id)->orderBy('id','desc')->paginate(10);
+       return view('admin.collor_data',compact('data'));
     }
  
  
@@ -182,13 +181,13 @@ class SleeveController extends Controller
           $sort_type = $request->get('sorttype'); 
              $search = $request->get('search');
              $search = str_replace("","%", $search);
-          $data = Sleeve::where('dept_id',$dept_id)
+          $data = Collor::where('dept_id',$dept_id)
               ->where(function($query) use ($search) {
-                  $query->where('sleeve_name', 'like', '%'.$search.'%')
-                     ->orWhere('sleeve_des', 'like', '%'.$search.'%')
-                     ->orWhere('sleeve_status', 'like', '%'.$search.'%');
+                  $query->where('collor_name', 'like', '%'.$search.'%')
+                     ->orWhere('collor_des', 'like', '%'.$search.'%')
+                     ->orWhere('collor_status', 'like', '%'.$search.'%');
                })->paginate(10);
-                   return view('admin.sleeve_data', compact('data'))->render();
+                   return view('admin.collor_data', compact('data'))->render();
                   
        }
    }

@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 use Exception;
-use App\Models\Sleeve;
+use App\Models\Backdetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
-class SleeveController extends Controller
+class BackdetailController extends Controller
 {
    
-    public function sleeve_view(Request $request){
-        try{ 
-             
-              return view('admin.sleeve');
+    public function backdetail_view(Request $request){
+         try{  
+               return view('admin.backdetail');
            }catch (Exception $e) { return  view('errors.error',['error'=>$e]);}
       }
  
@@ -21,8 +20,8 @@ class SleeveController extends Controller
        $dept_id = $request->header('dept_id');
        $teacher_id = $request->header('id');
        $validator=\Validator::make($request->all(),[    
-          'sleeve_name'=>'required',
-          'sleeve_name'=>'required|unique:sleeves,sleeve_name',
+          'back_name'=>'required',
+          'back_name'=>'required|unique:backdetails,back_name',
           'image'=>'image|mimes:jpeg,png,jpg|max:400',
         ],
         );
@@ -33,11 +32,10 @@ class SleeveController extends Controller
                'message'=>$validator->messages(),
             ]);
       }else{
- 
-             $model= new Sleeve;
+             $model= new backdetail;
              $model->dept_id=$dept_id;
-             $model->sleeve_name=$request->input('sleeve_name');
-             $model->sleeve_des=$request->input('sleeve_des');
+             $model->back_name=$request->input('back_name');
+             $model->back_des=$request->input('back_des');
              $model->created_by=$teacher_id;
              if ($request->hasfile('image')) {
                $imgfile = 'booking-';
@@ -68,9 +66,9 @@ class SleeveController extends Controller
          }
      }
  
-    public function sleeve_edit(Request $request) {
+    public function backdetail_edit(Request $request) {
       $id = $request->id;
-      $data = Sleeve::find($id);
+      $data = Backdetail::find($id);
       return response()->json([
           'status'=>200,  
           'data'=>$data,
@@ -78,12 +76,12 @@ class SleeveController extends Controller
     }
  
  
-    public function sleeve_update(Request $request ){
+    public function backdetail_update(Request $request ){
 
        $validator=\Validator::make($request->all(),[    
-          'sleeve_name'=>'required',
-          'sleeve_name'=>'required|unique:sleeves,sleeve_name,'.$request->input('edit_id'),
-          'image'=>'image|mimes:jpeg,png,jpg|max:400',
+         'back_name'=>'required',
+         'back_name'=>'required|unique:backdetails,back_name,'.$request->input('edit_id'),
+         'image'=>'image|mimes:jpeg,png,jpg|max:400',
       ]);
  
      $teacher_id = $request->header('id');
@@ -93,11 +91,11 @@ class SleeveController extends Controller
             'message'=>$validator->messages(),
          ]);
    }else{
-         $model=Sleeve::find($request->input('edit_id'));
+         $model=Backdetail::find($request->input('edit_id'));
      if($model){
-         $model->sleeve_name=$request->input('sleeve_name');
-         $model->sleeve_des=$request->input('sleeve_des');
-         $model->sleeve_status=$request->input('sleeve_status');
+         $model->back_name=$request->input('back_name');
+         $model->back_des=$request->input('back_des');
+         $model->back_status=$request->input('back_status');
          $model->updated_by=$teacher_id;
 
          if ($request->hasfile('image')) {
@@ -129,18 +127,18 @@ class SleeveController extends Controller
               'status'=>200,
               'message'=>'Data Updated Successfull'
            ]);
-       }else{
+       }else {
          return response()->json([
              'status'=>404,  
              'message'=>'Student not found',
            ]);
-     }
+         }
  
      }
    }
  
  
-   public function sleeve_delete(Request $request) { 
+   public function backdetail_delete(Request $request) { 
  
        // $hallinfo=Building::where('id',$request->input('id'))->count('id');
        //  if($hallinfo>0){
@@ -149,7 +147,7 @@ class SleeveController extends Controller
        //       'message'=>'Can not delete this record. This hall is used in hall info table.',
        //      ]);
        //   }else{
-           $model=Sleeve::find($request->input('id'));
+           $model=Backdetail::find($request->input('id'));
            $filePath = public_path('uploads') . '/' . $model->image;
            if(File::exists($filePath)){
                  File::delete($filePath);
@@ -167,28 +165,28 @@ class SleeveController extends Controller
  
    public function fetch(Request $request){
        $dept_id = $request->header('dept_id');
-       $data=Sleeve::where('dept_id',$dept_id)->orderBy('id','desc')->paginate(10);
-       return view('admin.sleeve_data',compact('data'));
+       $data=Backdetail::where('dept_id',$dept_id)->orderBy('id','desc')->paginate(10);
+       return view('admin.backdetail_data',compact('data'));
     }
  
  
  
    function fetch_data(Request $request)
    {
-    if($request->ajax())
-    {
+      if($request->ajax())
+       {
           $dept_id = $request->header('dept_id');
           $sort_by = $request->get('sortby');
           $sort_type = $request->get('sorttype'); 
              $search = $request->get('search');
              $search = str_replace("","%", $search);
-          $data = Sleeve::where('dept_id',$dept_id)
+             $data = Backdetail::where('dept_id',$dept_id)
               ->where(function($query) use ($search) {
-                  $query->where('sleeve_name', 'like', '%'.$search.'%')
-                     ->orWhere('sleeve_des', 'like', '%'.$search.'%')
-                     ->orWhere('sleeve_status', 'like', '%'.$search.'%');
+                  $query->where('back_name', 'like', '%'.$search.'%')
+                     ->orWhere('back_des', 'like', '%'.$search.'%')
+                     ->orWhere('back_status', 'like', '%'.$search.'%');
                })->paginate(10);
-                   return view('admin.sleeve_data', compact('data'))->render();
+                   return view('admin.back_data', compact('data'))->render();
                   
        }
    }
